@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
 
   // cap
   S2Cap cap(S2LatLng::FromDegrees(40.039752, 116.332557).ToPoint(),
-            S2Earth::ToAngle(util::units::Meters(5000.0)));
+            S2Earth::ToAngle(util::units::Meters(50000.0)));
 
   int min_level = 10;
   int max_level = 14;
@@ -112,22 +112,23 @@ int main(int argc, char **argv) {
   S2CellUnion cell_union11 = rc.GetCovering(cap);
   std::cout << "size: " << cell_union11.size() << std::endl;
   for (auto &ci : cell_union11) {
-      std::vector<S2CellId> cell_ids11;
-      for (S2CellId c = ci.child_begin(18);
-           c != ci.child_end(18);
-           c = c.next()) {
-          cell_ids11.push_back(c);
-      }
-  }
+      if (cap.Contains(S2Cell(ci))) {
+          std::cout << "full: " << ci.level() << ": " << ci << std::endl;
+      } else {
+        std::vector<S2CellId> cell_ids11;
+        for (S2CellId c = ci.child_begin(18);
+             c != ci.child_end(18);
+             c = c.next()) {
+          if (cap.MayIntersect(S2Cell(c))) {
+            cell_ids11.push_back(c);
+          }
+        }
 
-    std::cout << ci.level() << ": " << ci << std::endl;
-    rc.mutable_options()->set_fixed_level(18);
-    S2CellUnion cell_union12 = rc.GetCovering(cap);
-    std::vector<S2CellId> cell_ids12;
-    for (auto &ci : cell_union12) {
-      std::cout << ci.level() << ": " << ci << std::endl;
-    }
-    std::cout << "size: " << cell_union12.size() << std::endl;
+//        for (auto &ci2 : cell_ids11) {
+//          std::cout << ci2.level() << ": " << ci2 << std::endl;
+//        }
+        std::cout << "size: " << cell_ids11.size() << std::endl;
+      }
   }
 
 /*  // polygon
