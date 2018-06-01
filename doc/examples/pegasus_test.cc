@@ -4,6 +4,7 @@
 // simple usage of S2
 
 #include <iomanip>
+#include <list>
 #include <s2/s2latlng.h>
 #include <s2/s2cell.h>
 #include <s2/s2earth.h>
@@ -76,7 +77,7 @@ int main(int argc, char **argv) {
 
   // cap
   S2Cap cap(S2LatLng::FromDegrees(40.039752, 116.332557).ToPoint(),
-            S2Earth::ToAngle(util::units::Meters(50000.0)));
+            S2Earth::ToAngle(util::units::Meters(5000.0)));
 
   int min_level = 10;
   int max_level = 14;
@@ -124,10 +125,28 @@ int main(int argc, char **argv) {
           }
         }
 
-//        for (auto &ci2 : cell_ids11) {
-//          std::cout << ci2.level() << ": " << ci2 << std::endl;
-//        }
-        std::cout << "size: " << cell_ids11.size() << std::endl;
+        std::pair<std::string, std::string> begin_end;
+        std::list<std::pair<std::string, std::string>> begin_ends;
+
+        S2CellId pre;
+        for (auto &cur : cell_ids11) {
+          if (!pre.is_valid()) {
+            pre = cur;
+            begin_end.first = pre.ToString();
+          } else {
+            if (pre.next() != cur) {
+              begin_end.second = pre.ToString();
+              begin_ends.push_back(begin_end);
+              begin_end.first = cur.ToString();
+            }
+            pre = cur;
+          }
+          //std::cout << cur.level() << ": " << cur << std::endl;
+        }
+        std::cout << "begin_ends size: " << begin_ends.size() << std::endl;
+/*        for (auto be : begin_ends) {
+          std::cout << be.first << "->" << be.second << std::endl;
+        }*/
       }
   }
 
