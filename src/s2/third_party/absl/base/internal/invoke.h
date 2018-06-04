@@ -32,8 +32,8 @@
 // The implementation is SFINAE-friendly: substitution failure within Invoke()
 // isn't an error.
 
-#ifndef S2_THIRD_PARTY_ABSL_BASE_INTERNAL_INVOKE_H_
-#define S2_THIRD_PARTY_ABSL_BASE_INTERNAL_INVOKE_H_
+#ifndef ABSL_BASE_INTERNAL_INVOKE_H_
+#define ABSL_BASE_INTERNAL_INVOKE_H_
 
 #include <algorithm>
 #include <type_traits>

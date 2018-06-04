@@ -37,8 +37,8 @@
 //  http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3658.html
 //
 
-#ifndef S2_THIRD_PARTY_ABSL_UTILITY_UTILITY_H_
-#define S2_THIRD_PARTY_ABSL_UTILITY_UTILITY_H_
+#ifndef ABSL_UTILITY_UTILITY_H_
+#define ABSL_UTILITY_UTILITY_H_
 
 #include <cstddef>
 #include <cstdlib>
