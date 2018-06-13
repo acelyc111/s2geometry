@@ -17,7 +17,7 @@ cmake_dependent_option(WITH_GLOG "Use glog for logging." ON
                        "WITH_GFLAGS" OFF)
 add_feature_info(GLOG WITH_GLOG "provides logging configurability.")
 
-option(BUILD_SHARED_LIBS "Build shared libraries instead of static." OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries instead of static." ON)
 add_feature_info(SHARED_LIBS BUILD_SHARED_LIBS
                  "builds shared libraries instead of static.")
 
@@ -80,9 +80,9 @@ endif()
 include_directories(
     ${GFLAGS_INCLUDE_DIRS} ${GLOG_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR}
     ${PYTHON_INCLUDE_DIRS})
-message("GTEST_INC: ${GTEST_INC}")
-if (GTEST_INC)
-    include_directories(${GTEST_INC})
+message("GTEST_INCLUDE: ${GTEST_INCLUDE}")
+if (GTEST_INCLUDE)
+    include_directories(${GTEST_INCLUDE})
 endif()
 
 include_directories(src)
