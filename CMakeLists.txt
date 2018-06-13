@@ -17,11 +17,12 @@ cmake_dependent_option(WITH_GLOG "Use glog for logging." ON
                        "WITH_GFLAGS" OFF)
 add_feature_info(GLOG WITH_GLOG "provides logging configurability.")
 
-option(BUILD_SHARED_LIBS "Build shared libraries instead of static." ON)
+option(BUILD_SHARED_LIBS "Build shared libraries instead of static." OFF)
 add_feature_info(SHARED_LIBS BUILD_SHARED_LIBS
                  "builds shared libraries instead of static.")
 
-option(BUILD_EXAMPLES "Build s2 documentation examples." ON)
+option(BUILD_EXAMPLES "Build s2 documentation examples." OFF)
+option(BUILD_PYTHON "Build python interfaces." OFF)
 
 feature_summary(WHAT ALL)
 
@@ -79,6 +80,11 @@ endif()
 include_directories(
     ${GFLAGS_INCLUDE_DIRS} ${GLOG_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR}
     ${PYTHON_INCLUDE_DIRS})
+message("GTEST_INC: ${GTEST_INC}")
+if (GTEST_INC)
+    include_directories(${GTEST_INC})
+endif()
+
 include_directories(src)
 
 add_library(s2
@@ -524,6 +530,6 @@ if (BUILD_EXAMPLES)
   add_subdirectory("doc/examples" examples)
 endif()
 
-if (${SWIG_FOUND} AND ${PYTHONLIBS_FOUND})
+if (BUILD_PYTHON AND ${SWIG_FOUND} AND ${PYTHONLIBS_FOUND})
   add_subdirectory("src/python" python)
 endif()
