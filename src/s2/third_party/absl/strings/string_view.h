@@ -608,11 +608,7 @@ std::ostream& operator<<(std::ostream& o, string_view piece);
 
 
 
-
 #endif  // ABSL_HAVE_STD_STRING_VIEW
-
-
-
 
 
 namespace absl {
